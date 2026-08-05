@@ -79,7 +79,7 @@ export const AdminLogin: React.FC<AdminLoginProps> = ({
                 className="w-full pl-12 pr-4 py-3 rounded-xl bg-slate-950 border border-slate-800 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none text-white text-sm"
               />
             </div>
-            <p className="text-xs text-slate-500 mt-1.5">Default password: <code className="bg-slate-950 px-1.5 py-0.5 rounded text-slate-300 font-mono border border-slate-800">zentronix2026</code></p>
+            
           </div>
 
           <button
