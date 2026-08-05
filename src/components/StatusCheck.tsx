@@ -23,14 +23,24 @@ export const StatusCheck: React.FC<StatusCheckProps> = ({
 
     setLoading(true);
     setError('');
+    setResults(null);
+    setSearched(false);
     try {
       const res = await fetch(`/api/registrations/search?query=${encodeURIComponent(query.trim())}`);
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || 'Failed to search');
+      const text = await res.text();
+      let data;
+      try {
+        data = JSON.parse(text);
+      } catch {
+        throw new Error(text && text.length < 150 ? text : 'Registration record not found or server response was invalid.');
+      }
+      if (!res.ok) throw new Error(data.error || 'Failed to search registrations');
       setResults(data);
       setSearched(true);
     } catch (err: any) {
       setError(err.message || 'Error searching registrations');
+      setSearched(true);
+      setResults([]);
     } finally {
       setLoading(false);
     }

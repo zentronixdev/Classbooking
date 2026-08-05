@@ -359,24 +359,40 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
                         <label className="block text-sm font-semibold text-slate-300 mb-1.5">
                           Upload Payment Screenshot <span className="text-red-400">*</span>
                         </label>
-                        <div className="flex items-center space-x-4">
-                          <label className="flex-1 cursor-pointer bg-slate-900 hover:bg-slate-800 border-2 border-dashed border-slate-700 rounded-xl p-4 text-center transition flex flex-col items-center justify-center">
-                            <Upload className="w-6 h-6 text-slate-400 mb-1" />
-                            <span className="text-xs font-medium text-slate-300">Click to upload screenshot</span>
-                            <span className="text-[10px] text-slate-500">PNG, JPG, JPEG up to 10MB</span>
-                            <input
-                              type="file"
-                              accept="image/*"
-                              onChange={handleFileChange}
-                              className="hidden"
-                            />
-                          </label>
-                          {screenshotPreview && (
-                            <div className="w-20 h-20 rounded-xl border border-slate-700 overflow-hidden shrink-0 relative bg-slate-900">
-                              <img src={screenshotPreview} alt="Payment Preview" className="w-full h-full object-cover" />
-                            </div>
-                          )}
-                        </div>
+                          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+                            <label className="flex-1 cursor-pointer bg-slate-900 hover:bg-slate-800 border-2 border-dashed border-slate-700 rounded-xl p-4 text-center transition flex flex-col items-center justify-center">
+                              <Upload className="w-6 h-6 text-slate-400 mb-1" />
+                              <span className="text-xs font-medium text-slate-300">Click to upload payment screenshot</span>
+                              <span className="text-[10px] text-slate-500">PNG, JPG, JPEG up to 10MB</span>
+                              <input
+                                type="file"
+                                accept="image/*"
+                                onChange={handleFileChange}
+                                className="hidden"
+                              />
+                            </label>
+                            {screenshotPreview && (
+                              <div className="flex items-center space-x-3 bg-slate-900 p-3 rounded-xl border border-slate-700">
+                                <div className="w-16 h-16 rounded-lg border border-slate-600 overflow-hidden shrink-0 bg-slate-950">
+                                  <img src={screenshotPreview} alt="Payment Preview" className="w-full h-full object-cover" />
+                                </div>
+                                <div className="text-xs">
+                                  <p className="font-semibold text-emerald-400">Screenshot Attached</p>
+                                  <p className="text-slate-400 text-[10px]">Ready for submission</p>
+                                  <button
+                                    type="button"
+                                    onClick={() => {
+                                      setScreenshotPreview('');
+                                      setFormData(prev => ({ ...prev, payment_screenshot: '' }));
+                                    }}
+                                    className="text-red-400 hover:text-red-300 text-[11px] font-semibold mt-1 underline"
+                                  >
+                                    Remove / Change
+                                  </button>
+                                </div>
+                              </div>
+                            )}
+                          </div>
                       </div>
                     </div>
                   </div>

@@ -1,5 +1,6 @@
-import React from 'react';
-import { CheckCircle2, Calendar, Clock, Phone, Mail, Link as LinkIcon, ArrowRight, Download, Home } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
+import { motion } from 'motion/react';
+import { CheckCircle2, Calendar, Clock, Phone, Mail, Link as LinkIcon, ArrowRight, Download, Home, Sparkles } from 'lucide-react';
 import { Registration, WorkshopDetails } from '../types';
 
 interface SuccessViewProps {
@@ -15,6 +16,21 @@ export const SuccessView: React.FC<SuccessViewProps> = ({
   onGoHome,
   onCheckStatus
 }) => {
+  const [confettiPieces, setConfettiPieces] = useState<Array<{ id: number; x: number; y: number; color: string; size: number; delay: number }>>([]);
+
+  useEffect(() => {
+    const colors = ['#3b82f6', '#10b981', '#f59e0b', '#ec4899', '#8b5cf6', '#06b6d4'];
+    const pieces = Array.from({ length: 30 }).map((_, i) => ({
+      id: i,
+      x: Math.random() * 100,
+      y: -10 - Math.random() * 20,
+      color: colors[Math.floor(Math.random() * colors.length)],
+      size: 6 + Math.random() * 8,
+      delay: Math.random() * 2
+    }));
+    setConfettiPieces(pieces);
+  }, []);
+
   const handleDownloadReceipt = () => {
     const receiptContent = `========================================
 ZENTRONIX DEVELOPERS - WORKSHOP RECEIPT
@@ -46,12 +62,45 @@ Thank you for registering with Zentronix Developers!
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 py-12 px-4 sm:px-6 lg:px-8 text-slate-100">
-      <div className="max-w-2xl mx-auto space-y-8">
-        <div className="bg-slate-900 rounded-3xl shadow-2xl border border-slate-800 overflow-hidden text-center p-8 sm:p-12">
-          <div className="w-20 h-20 bg-emerald-500/20 text-emerald-400 rounded-full flex items-center justify-center mx-auto mb-6 shadow-inner border border-emerald-500/30">
-            <CheckCircle2 className="w-10 h-10" />
+    <div className="min-h-screen bg-slate-950 py-12 px-4 sm:px-6 lg:px-8 text-slate-100 relative overflow-hidden flex items-center justify-center">
+      {/* Confetti particles */}
+      {confettiPieces.map((p) => (
+        <motion.div
+          key={p.id}
+          initial={{ y: '-10vh', x: `${p.x}vw`, opacity: 1, rotate: 0 }}
+          animate={{ y: '110vh', opacity: 0.2, rotate: 360 }}
+          transition={{ duration: 3 + Math.random() * 2, repeat: Infinity, delay: p.delay, ease: 'linear' }}
+          style={{
+            position: 'absolute',
+            width: p.size,
+            height: p.size,
+            backgroundColor: p.color,
+            borderRadius: Math.random() > 0.5 ? '50%' : '2px',
+            zIndex: 1
+          }}
+        />
+      ))}
+
+      <motion.div 
+        initial={{ opacity: 0, scale: 0.95, y: 20 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        transition={{ duration: 0.5, ease: 'easeOut' }}
+        className="max-w-2xl w-full mx-auto space-y-8 relative z-10"
+      >
+        <div className="bg-slate-900 rounded-3xl shadow-2xl border border-slate-800 overflow-hidden text-center p-8 sm:p-12 relative">
+          <div className="absolute top-4 right-4 text-amber-400 opacity-80 animate-pulse flex items-center space-x-1 text-xs font-semibold bg-amber-500/10 px-3 py-1 rounded-full border border-amber-500/20">
+            <Sparkles className="w-3.5 h-3.5" />
+            <span>Successfully Enrolled</span>
           </div>
+
+          <motion.div 
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            transition={{ type: 'spring', stiffness: 200, damping: 15, delay: 0.2 }}
+            className="w-20 h-20 bg-emerald-500/20 text-emerald-400 rounded-full flex items-center justify-center mx-auto mb-6 shadow-inner border border-emerald-500/30"
+          >
+            <CheckCircle2 className="w-10 h-10" />
+          </motion.div>
 
           <span className="inline-block px-4 py-1.5 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 text-xs font-semibold tracking-wide uppercase mb-3">
             Registration Successful
@@ -141,7 +190,7 @@ Thank you for registering with Zentronix Developers!
             </button>
           </div>
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 };
