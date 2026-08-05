@@ -1,0 +1,6 @@
+{
+  "name": "Zentronix Workshop Registration",
+  "description": "Modern workshop registration system for Zentronix Developers Complete Website Development Workshop",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
