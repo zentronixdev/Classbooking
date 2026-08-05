@@ -57,7 +57,7 @@ export const Home: React.FC<HomeProps> = ({
                 {workshopDetails.title}
               </h1>
               <p className="text-sm sm:text-xl text-slate-300 max-w-2xl font-normal leading-relaxed">
-                Master modern full-stack web development from scratch. Learn professional frontend design with React & Tailwind, backend APIs, and seamless production deployment on Vercel.
+                Master modern full-stack web development from scratch. Learn professional frontend design with HTML & CSS, JavaScript, and seamless production deployment on Vercel.
               </p>
 
               {/* Countdown Timer Box */}
